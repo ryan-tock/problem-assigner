@@ -246,6 +246,59 @@ function assignmentsLoss(assign) {
         }
     }
 
+    var sets = {}
+    for (let i=0; i < assign.length; i++) {
+        var problem_set = JSON.parse(JSON.stringify(assign[i]))
+        problem_set.sort()
+
+        if (sets[problem_set] == undefined) {
+            sets[problem_set] = 0;
+        }
+        sets[problem_set] += 1;
+    }
+
+    Object.entries(sets).forEach(([_, value]) => {
+        loss += ((value ** 2) - 1) * 100
+    });
+
+    var partner_map = {}
+    for (let i=0; i < assign.length; i++) {
+        for (let j=0; j<3; j++) {
+            for (let k=0; k<3; k++) {
+                if (j == k) {
+                    continue;
+                }
+
+                var student1 = assign[i][j];
+                var student2 = assign[i][k];
+
+                if (partner_map[student1] == undefined) {
+                    partner_map[student1] = {};
+                }
+                if (partner_map[student1][student2] == undefined) {
+                    partner_map[student1][student2] = 0;
+                }
+
+                partner_map[student1][student2] += 1;
+            }
+        }
+    }
+
+    Object.entries(partner_map).forEach(([_, value]) => {
+        var min = Infinity;
+        var max = 0;
+        Object.entries(value).forEach(([_, val]) => {
+            if (val < min) {
+                min = val;
+            }
+            if (val > max) {
+                max = val;
+            }
+        });
+
+        loss += max - min;
+    });
+
     return loss;
 }
 

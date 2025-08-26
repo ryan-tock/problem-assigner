@@ -24,36 +24,3 @@ export class RNG {
         return val;
     }
 }
-
-export function generateList(date, questions) {
-    var num = parseInt(date.replaceAll("-", ""))
-    var rng = new RNG(num);
-
-    var assignments = [];
-    while (assignments.length < questions) {
-        assignments.push([-1, -1, -1]);
-    }
-
-    var choices = [];
-
-    while (choices.length < questions * 3) {
-        choices.push(0);
-        choices.push(1);
-        choices.push(2);
-        choices.push(3);
-        choices.push(4);
-        choices.push(5);
-    }
-
-    for (let i=0; i<assignments.length; i++) {
-        for (let j=0; j<3; j++) {
-            var ind = rng.range(choices.length);
-            var val = choices[ind];
-            choices.splice(ind, 1);
-
-            assignments[i][j] = val;
-        }
-    }
-    
-    return assignments;
-}
