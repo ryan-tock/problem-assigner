@@ -5,10 +5,42 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Problem Assigner</title>
-    <script type="module" src="main.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>  
-    <h1>Problem Assigner</h1>
+    <main class="container">
+        <h1>Problem Assigner</h1>
+        <div class="controls">
+            <div class="input-group">
+                <label for="question-input">Number of questions:</label>
+                <input id="question-input" type="number" placeholder="e.g., 10">
+            </div>
+            <div class="input-group">
+                <label for="date-selector">Due date:</label>
+                <input id="date-selector" type="date">
+            </div>
+        </div>
+
+        <div class="member-management">
+            <h2>Group Members</h2>
+            <div class="input-group">
+                <label for="member-input">Add Member:</label>
+                <div class="add-member-form">
+                    <input id="member-input" type="text" placeholder="e.g., Jane">
+                    <button id="add-member-btn">Add</button>
+                </div>
+            </div>
+            <ul id="member-list"></ul>
+        </div>
+
+        <div class="table-container">
+            <h2 class="table-label">Problem Assignments</h2>
+            <table id="result-table"></table>
+        </div>
+    </main>
+    <script type="module" src="main.js" defer></script>
 </body>
 </html>

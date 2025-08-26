@@ -1,0 +1,216 @@
+/* General Body Styles */
+body {
+    font-family: 'Lora', 'Georgia', serif;
+    background-color: #f8f8f4; /* Off-white background */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+/* Main container for the application */
+.container {
+    background-color: #ffffff;
+    padding: 3rem;
+    border-radius: 4px; /* Sharper edges for a classic look */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+    width: 100%;
+    max-width: 650px;
+    text-align: center;
+}
+
+/* Header */
+h1 {
+    font-family: 'Lora', 'Georgia', serif;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 2.5rem;
+    font-size: 2.25rem;
+}
+
+/* Input controls section */
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+}
+
+label {
+    margin-bottom: 0.5rem;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Input field styling */
+input[type="number"],
+input[type="date"],
+input[type="text"] {
+    font-family: 'Lora', 'Georgia', serif;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: #fdfdfd;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="text"]:focus {
+    outline: none;
+    border-color: #333;
+    box-shadow: 0 0 0 3px rgba(50, 50, 50, 0.1);
+}
+
+/* Member Management Section */
+.member-management {
+    margin-bottom: 3rem;
+    text-align: left;
+    border-top: 1px solid #eee;
+    padding-top: 2rem;
+}
+
+.member-management h2 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.add-member-form {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.add-member-form input {
+    flex-grow: 1;
+}
+
+.add-member-form button {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.add-member-form button:hover {
+    background-color: #f5f5f5;
+    border-color: #bbb;
+}
+
+#member-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+#member-list li {
+    display: flex;
+    align-items: center;
+    background-color: #f9fafb;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: 1px solid #e9e9e9;
+    font-family: 'Lora', 'Georgia', serif;
+}
+
+#member-list .remove-member-btn {
+    margin-left: 0.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #999;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.3s ease;
+}
+
+#member-list .remove-member-btn:hover {
+    color: #d9534f;
+}
+
+/* Table container for better scrolling on small screens */
+.table-container {
+    overflow-x: auto;
+}
+
+.table-label {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    text-align: left;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th, td {
+    border: 1px solid #e9e9e9;
+    padding: 0.9rem 1rem;
+    text-align: center;
+    min-width: 50px;
+}
+
+th {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 600;
+    background-color: #fcfcfc;
+    color: #444;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
+@media (min-width: 550px) {
+    .controls {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    .input-group {
+        flex: 1;
+        margin-right: 2rem;
+    }
+
+    .input-group:last-child {
+        margin-right: 0;
+    }
+}
