@@ -236,13 +236,13 @@ function assignmentsLoss(assign) {
 
     for (let i = 0; i < assign.length; i++) {
         if (assign[i][0] == assign[i][1]) {
-            loss += 1000;
+            loss += 1000000;
         }
         if (assign[i][1] == assign[i][2]) {
-            loss += 1000;
+            loss += 1000000;
         }
         if (assign[i][0] == assign[i][2]) {
-            loss += 1000;
+            loss += 1000000;
         }
     }
 
