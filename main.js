@@ -8,7 +8,7 @@ var addMemberBtn = document.getElementById("add-member-btn");
 var memberList = document.getElementById("member-list");
 
 // --- Global State ---
-var numQustions = null;
+var numQuestions = null;
 var date = null;
 var assignments = null;
 var members = []; // Default to an empty array
@@ -99,7 +99,7 @@ dateSelector.addEventListener(
 questionInput.addEventListener(
     'change',
     function() {
-        numQustions = questionInput.value;
+        numQuestions = questionInput.value;
         createAssignments();
     }
 );
@@ -170,6 +170,8 @@ function generateList(date, questions, memberCount) {
         }
     }
 
+    var memberQuestions = {};
+
     for (let i = 0; i < assignments.length; i++) {
         for (let j = 0; j < 3; j++) {
             if (choices.length === 0) break;
@@ -178,7 +180,19 @@ function generateList(date, questions, memberCount) {
             choices.splice(ind, 1);
 
             assignments[i][j] = val;
+            
+            if (memberQuestions[val] == undefined) {
+                memberQuestions[val] = 0;
+            }
+            memberQuestions[val] += 1;
         }
+    }
+
+    var maxAssignments = Object.keys(memberQuestions).reduce((a, b) => memberQuestions[a] > memberQuestions[b] ? a : b);
+    var minAssignments = Object.keys(memberQuestions).reduce((a, b) => memberQuestions[a] < memberQuestions[b] ? a : b);
+
+    if (maxAssignments - minAssignments >= 2) {
+        return generateList((num * 2) + "", questions, memberCount);
     }
     
     return assignments;
@@ -186,12 +200,12 @@ function generateList(date, questions, memberCount) {
 
 
 function createAssignments() {
-    if (numQustions == null || date == null || members.length === 0) {
+    if (numQuestions == null || date == null || members.length === 0) {
         document.getElementById('result-table').innerHTML = ''; // Clear table if inputs are invalid
         return;
     }
 
-    assignments = generateList(date, numQustions, members.length);
+    assignments = generateList(date, numQuestions, members.length);
 
     var pairs = [];
 
@@ -248,22 +262,27 @@ function assignmentsLoss(assign) {
 
     var sets = {}
     for (let i=0; i < assign.length; i++) {
-        var problem_set = JSON.parse(JSON.stringify(assign[i]))
-        problem_set.sort()
+        var problemSet = JSON.parse(JSON.stringify(assign[i]))
+        problemSet.sort()
 
-        if (sets[problem_set] == undefined) {
-            sets[problem_set] = 0;
+        if (sets[problemSet] == undefined) {
+            sets[problemSet] = 0;
         }
-        sets[problem_set] += 1;
+        sets[problemSet] += 1;
     }
 
     Object.entries(sets).forEach(([_, value]) => {
         loss += ((value ** 2) - 1) * 100
     });
 
-    var partner_map = {}
+    var partnerMap = {}
+    var numQuestions = {}
     for (let i=0; i < assign.length; i++) {
         for (let j=0; j<3; j++) {
+            if (numQuestions[assign[i][j]] == undefined) {
+                numQuestions[assign[i][j]] = 0;
+            }
+            numQuestions[assign[i][j]] += 1;
             for (let k=0; k<3; k++) {
                 if (j == k) {
                     continue;
@@ -272,19 +291,18 @@ function assignmentsLoss(assign) {
                 var student1 = assign[i][j];
                 var student2 = assign[i][k];
 
-                if (partner_map[student1] == undefined) {
-                    partner_map[student1] = {};
+                if (partnerMap[student1] == undefined) {
+                    partnerMap[student1] = {};
                 }
-                if (partner_map[student1][student2] == undefined) {
-                    partner_map[student1][student2] = 0;
+                if (partnerMap[student1][student2] == undefined) {
+                    partnerMap[student1][student2] = 0;
                 }
 
-                partner_map[student1][student2] += 1;
+                partnerMap[student1][student2] += 1;
             }
         }
     }
-
-    Object.entries(partner_map).forEach(([_, value]) => {
+    Object.entries(partnerMap).forEach(([_, value]) => {
         var min = Infinity;
         var max = 0;
         Object.entries(value).forEach(([_, val]) => {
