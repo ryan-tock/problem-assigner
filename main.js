@@ -90,7 +90,7 @@ function addMember() {
 
 dateSelector.addEventListener(
     'change',
-    function() {
+    function () {
         date = dateSelector.value;
         createAssignments();
     }
@@ -98,7 +98,7 @@ dateSelector.addEventListener(
 
 questionInput.addEventListener(
     'change',
-    function() {
+    function () {
         numQuestions = questionInput.value;
         createAssignments();
     }
@@ -134,7 +134,7 @@ function renderMembers() {
     members.forEach(name => {
         const li = document.createElement('li');
         li.textContent = name;
-        
+
         const removeBtn = document.createElement('button');
         removeBtn.className = 'remove-member-btn';
         removeBtn.innerHTML = '&times;'; // Use HTML entity for 'x'
@@ -180,7 +180,7 @@ function generateList(date, questions, memberCount) {
             choices.splice(ind, 1);
 
             assignments[i][j] = val;
-            
+
             if (memberQuestions[val] == undefined) {
                 memberQuestions[val] = 0;
             }
@@ -188,13 +188,13 @@ function generateList(date, questions, memberCount) {
         }
     }
 
-    var maxAssignments = Object.keys(memberQuestions).reduce((a, b) => memberQuestions[a] > memberQuestions[b] ? a : b);
-    var minAssignments = Object.keys(memberQuestions).reduce((a, b) => memberQuestions[a] < memberQuestions[b] ? a : b);
+    var maxAssignments = Math.max(...Object.values(memberQuestions));
+    var minAssignments = Math.min(...Object.values(memberQuestions));
 
     if (maxAssignments - minAssignments >= 2) {
         return generateList((num * 2) + "", questions, memberCount);
     }
-    
+
     return assignments;
 }
 
@@ -261,9 +261,9 @@ function assignmentsLoss(assign) {
     }
 
     var sets = {}
-    for (let i=0; i < assign.length; i++) {
-        var problemSet = JSON.parse(JSON.stringify(assign[i]))
-        problemSet.sort()
+    for (let i = 0; i < assign.length; i++) {
+        var problemSet = JSON.parse(JSON.stringify(assign[i]));
+        problemSet.sort();
 
         if (sets[problemSet] == undefined) {
             sets[problemSet] = 0;
@@ -272,18 +272,18 @@ function assignmentsLoss(assign) {
     }
 
     Object.entries(sets).forEach(([_, value]) => {
-        loss += ((value ** 2) - 1) * 100
+        loss += ((value ** 2) - 1) * 100;
     });
 
-    var partnerMap = {}
-    var numQuestions = {}
-    for (let i=0; i < assign.length; i++) {
-        for (let j=0; j<3; j++) {
-            if (numQuestions[assign[i][j]] == undefined) {
-                numQuestions[assign[i][j]] = 0;
+    var partnerMap = {};
+    var numQuestionMap = {};
+    for (let i = 0; i < assign.length; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (numQuestionMap[assign[i][j]] == undefined) {
+                numQuestionMap[assign[i][j]] = 0;
             }
-            numQuestions[assign[i][j]] += 1;
-            for (let k=0; k<3; k++) {
+            numQuestionMap[assign[i][j]] += 1;
+            for (let k = 0; k < 3; k++) {
                 if (j == k) {
                     continue;
                 }
@@ -302,6 +302,7 @@ function assignmentsLoss(assign) {
             }
         }
     }
+
     Object.entries(partnerMap).forEach(([_, value]) => {
         var min = Infinity;
         var max = 0;
@@ -353,7 +354,7 @@ function generateTable(inputData) {
 
     const thead = table.createTHead();
     const headerRow = thead.insertRow();
-    
+
     // Create table headers from the members array
     members.forEach(name => {
         const th = document.createElement('th');
@@ -368,7 +369,7 @@ function generateTable(inputData) {
         for (let colIndex = 0; colIndex < members.length; colIndex++) {
             const cell = bodyRow.insertCell();
             const indicesForThisNumber = occurrences[colIndex];
-            
+
             if (indicesForThisNumber && indicesForThisNumber[rowIndex] !== undefined) {
                 cell.textContent = indicesForThisNumber[rowIndex];
             } else {
